@@ -8,7 +8,9 @@ namespace CashFlow.Application.UseCases.Expenses.Register
     {
 
         public ResponseRegisteredExpenseJson Execute(RequestRegisterExpenseJson request)
-        {
+        {    
+            
+            validate(request);
             return new ResponseRegisteredExpenseJson();
         }
 

@@ -12,10 +12,21 @@ namespace CashFlow.Api.Controllers
         public IActionResult Register([FromBody] RequestRegisterExpenseJson request)
         {
 
-            var useCase = new RegisterExpenseUseCase();
+            try
+            {
+                var useCase = new RegisterExpenseUseCase();
 
-            var response = useCase.Execute(request);
-            return Created(string.Empty, response);
+                var response = useCase.Execute(request);
+                return Created(string.Empty, response);
+            }
+            catch (ArgumentException ex) 
+            { 
+                    return BadRequest(ex.Message);            
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "unkwon error");
+            }
         }
     }
 }
