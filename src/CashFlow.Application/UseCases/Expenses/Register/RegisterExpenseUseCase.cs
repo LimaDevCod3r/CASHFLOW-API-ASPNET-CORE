@@ -16,31 +16,10 @@ namespace CashFlow.Application.UseCases.Expenses.Register
 
         private void validate(RequestRegisterExpenseJson request)
         {
-            var titleIsEmpty = string.IsNullOrEmpty(request.Title);
 
-            if (titleIsEmpty) 
-            {
-                throw new ArgumentException("The title is required.");
-            }
+            var validator = new RegisterExpenseValidator();
 
-            if(request.Amount <= 0)
-            {
-                throw new ArgumentException("The Amount must be greated than zero.");
-            }
-
-            var compareDate = DateTime.Compare(request.Date, DateTime.UtcNow);
-
-            if (compareDate < 0) 
-            {
-                throw new ArgumentException("Expenses cannot be for the future.");
-            }
-
-            var paymentTypeIsValid = Enum.IsDefined(typeof(PaymentType), request.PaymentType);
-
-            if (!paymentTypeIsValid) 
-            {
-                throw new ArgumentException("Payment Type is not valid.");
-            }
+            var result = validator.Validate(request);
         }
     }
 }
