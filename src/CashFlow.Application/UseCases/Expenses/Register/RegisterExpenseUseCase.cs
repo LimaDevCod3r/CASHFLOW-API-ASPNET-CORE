@@ -20,6 +20,15 @@ namespace CashFlow.Application.UseCases.Expenses.Register
             var validator = new RegisterExpenseValidator();
 
             var result = validator.Validate(request);
+
+
+            if (!result.IsValid)
+            {
+                var errorMessages = result.Errors.Select(f => f.ErrorMessage).ToList();
+                throw new ArgumentException();
+            }
+
+
         }
     }
 }
