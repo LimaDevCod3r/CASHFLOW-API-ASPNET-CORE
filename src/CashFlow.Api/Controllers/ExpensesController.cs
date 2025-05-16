@@ -1,5 +1,6 @@
 ﻿using CashFlow.Application.UseCases.Expenses.Register;
 using CashFlow.Communication.Requests;
+using CashFlow.Communication.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CashFlow.Api.Controllers
@@ -20,12 +21,14 @@ namespace CashFlow.Api.Controllers
                 return Created(string.Empty, response);
             }
             catch (ArgumentException ex) 
-            { 
-                    return BadRequest(ex.Message);            
+            {
+                var errorMessage = new ResponseErrorJson(ex.Message);               
+                return BadRequest(errorMessage);            
             }
             catch
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "unkwon error");
+                var errorMessage = new ResponseErrorJson("unkwon error");
+                return StatusCode(StatusCodes.Status500InternalServerError, errorMessage);
             }
         }
     }
