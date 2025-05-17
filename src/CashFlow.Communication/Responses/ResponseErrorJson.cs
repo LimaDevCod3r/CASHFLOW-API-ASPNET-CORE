@@ -2,12 +2,17 @@
 {
     public class ResponseErrorJson
     {
-        public string ErrorMessage { get; set; }
+        public List<string> ErrorMessages { get; set; }
 
 
-        public ResponseErrorJson(string ErrorMessage)
+        public ResponseErrorJson(string errorMessage)
         {
-            this.ErrorMessage = ErrorMessage;
+            ErrorMessages = [errorMessage];
+        }
+
+        public ResponseErrorJson(List<string> errorMessage)
+        {
+            ErrorMessages = errorMessage;
         }
     }
 }
