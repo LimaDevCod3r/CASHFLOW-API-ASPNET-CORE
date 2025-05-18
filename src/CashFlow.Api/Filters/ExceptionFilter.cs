@@ -25,8 +25,14 @@ namespace CashFlow.Api.Filters
             {
                 var ex = (ErrorOnValidationExeception)context.Exception;
 
-                var errorResponse = new ResponseErrorJson(ex.Message);
+                var errorResponse = new ResponseErrorJson(ex.Errors);
 
+                context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+                context.Result = new BadRequestObjectResult(errorResponse);
+            }
+            else
+            {
+                var errorResponse = new ResponseErrorJson(context.Exception.Message);
                 context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
                 context.Result = new BadRequestObjectResult(errorResponse);
             }
@@ -35,7 +41,7 @@ namespace CashFlow.Api.Filters
         private void ThrowUnkownError(ExceptionContext context) 
         {
             var errorMessage = new ResponseErrorJson("unkwon error");
-            context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError
+            context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
             context.Result = new ObjectResult(errorMessage);
         }
     }

@@ -2,11 +2,11 @@
 {
     public class ErrorOnValidationExeception : CashFlowException
     {
-        public List<string> Erros { get; }
+        public List<string> Errors { get; set; }
 
         public ErrorOnValidationExeception(List<string> errorMessages)
         {
-            Erros = errorMessages;
+            Errors = errorMessages;
         }
     }
 }
